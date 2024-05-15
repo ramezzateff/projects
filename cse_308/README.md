@@ -7,9 +7,9 @@ The To-Do List Application is a simple program designed to manage tasks by allow
 
 Project files:
 
-Main.cpp> contains the main function as the entry
-point.
-Func.cpp> contains the functions of to do list program (loadFiles, saveFiles, add view delete Tasks).
+- Main.cpp> contains the main function as the entry
+- point.
+- Func.cpp> contains the functions of to do list program (loadFiles, saveFiles, add view delete Tasks).
 Main.h> contains the headers and the prototypes
 
 Features:
