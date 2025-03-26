@@ -1,10 +1,5 @@
-import numpy as np
-import h5py
-import torch
-import torch.nn as nn
-import torch.optim as optim
-import torch.nn.functional as F
-from torch.utils.data import DataLoader, TensorDataset
+#!/usr/bin/python3
+from imports import *
 
 # Load the data
 with h5py.File("qam_data.h5", "r") as f:

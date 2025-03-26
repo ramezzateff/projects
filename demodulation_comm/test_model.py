@@ -1,9 +1,14 @@
+#!/usr/bin/python3
 import torch
 import torch.nn as nn
 import numpy as np
 import h5py
+from gnuradio import digital, blocks, gr, analog
+import torch.optim as optim
+import torch.nn.functional as F
+from torch.utils.data import DataLoader, TensorDataset
 
-# تعريف نفس النموذج المستخدم في التدريب
+# Define the same model used in training.
 class QAM_CNN(nn.Module):
     def __init__(self):
         super(QAM_CNN, self).__init__()
@@ -27,19 +32,19 @@ class QAM_CNN(nn.Module):
         x = self.fc4(x)
         return x
 
-# تحميل النموذج
+# Load the form
 model = QAM_CNN()
-model.load_state_dict(torch.load("qam_cnn_model.pth"))
+model.load_state_dict(torch.load("qam_cnn_model.pth", weights_only=True))
 model.eval()
 
-# تحميل بيانات الاختبار
+# Load test data
 with h5py.File("qam_data.h5", "r") as f:
     qam_signal = np.array(f["qam_signal"])
 
 X_test = np.column_stack((qam_signal.real, qam_signal.imag))
 X_tensor = torch.tensor(X_test, dtype=torch.float32)
 
-# التصنيف باستخدام النموذج
+# Classification using the model
 with torch.no_grad():
     predictions = model(X_tensor)
     predicted_labels = torch.argmax(predictions, dim=1).numpy()

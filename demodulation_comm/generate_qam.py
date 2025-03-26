@@ -1,13 +1,11 @@
 #!/usr/bin/python3
-import numpy as np
-import h5py
-from gnuradio import digital, blocks, gr, analog
+from imports import *
 
 class QAM_Generator(gr.top_block):
     def __init__(self, samp_rate=32000, num_samples=100000, noise_level=0.1):
-        gr.top_block.__init__(self)
+        super(QAM_Generator, self).__init__()
 
-        # Configuration
+        # إConfiguration
         self.samp_rate = samp_rate
         self.num_samples = num_samples
 
@@ -16,8 +14,7 @@ class QAM_Generator(gr.top_block):
 
         # Random data generator (values from 0 to 15 for 16-QAM)
         self.random_source = blocks.vector_source_b(
-            np.random.randint(0, 16, self.num_samples).tolist(), 
-            False  # Not repeating
+            np.random.randint(0, 16, self.num_samples).tolist(), False
         )
 
         # Map digital data to 16-QAM symbols
@@ -71,7 +68,7 @@ if __name__ == "__main__":
 
     # Retrieve data
     data = qam_gen.get_data()
-
+    
     if len(data) > 0:
         print(f"✅ Recorded samples: {len(data)}")
         # Save data to a file
@@ -79,4 +76,4 @@ if __name__ == "__main__":
             f.create_dataset("qam_signal", data=data)
         print("✅ Data saved to qam_data.h5")
     else:
-        print("⚠ No data recorded, check the flow settings.")
+        print("❌ No data recorded, check settings.")
